@@ -1,0 +1,13 @@
+{
+  "name": "playableos",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @playableos/web dev",
+    "dev:clean": "pnpm --filter @playableos/web dev:clean",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

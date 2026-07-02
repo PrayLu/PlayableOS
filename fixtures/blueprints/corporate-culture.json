@@ -1,0 +1,439 @@
+{
+  "metadata": {
+    "id": "corporate-culture-001",
+    "version": "0.2.0",
+    "title": "企业文化入门 · 价值观情境演练",
+    "description": "沉浸式视听互动体验：通过真实职场情境，理解并践行公司核心价值观。",
+    "language": "zh-CN",
+    "duration_minutes": 12,
+    "type": "simulation",
+    "tags": ["企业文化", "价值观", "新员工", "MVP"]
+  },
+  "capability": {
+    "target": "企业文化理解与践行",
+    "learning_objective": "能够在日常工作中识别价值观冲突，并做出符合公司文化的正确判断与行动。",
+    "rubric": [
+      "能准确理解四项核心价值观的含义",
+      "能在客户利益与内部流程冲突时优先客户",
+      "能在跨部门协作中体现团队合作精神",
+      "能在面对利益诱惑时坚持诚信正直"
+    ]
+  },
+  "scenario": {
+    "context": "你是刚入职的新员工，今天是入职第三天的「企业文化沉浸日」。HR 伙伴林姐将带你通过几个真实情境，学习如何在工作中践行公司价值观。",
+    "setting": "某科技公司 · 总部办公区",
+    "characters": [
+      {
+        "id": "mentor",
+        "name": "林姐",
+        "role": "HR 文化导师",
+        "avatar": "👩‍💼",
+        "portrait": "https://api.dicebear.com/7.x/notionists/png?seed=LinJie&backgroundColor=6366f1",
+        "position": "left",
+        "voice": {
+          "rate": 0.92,
+          "pitch": 1.05,
+          "voice_id": "zh_female_xiaohe_uranus_bigtts",
+          "stability": 0.55,
+          "similarity_boost": 0.82
+        }
+      },
+      {
+        "id": "colleague",
+        "name": "小王",
+        "role": "同组同事",
+        "avatar": "👨‍💻",
+        "portrait": "https://api.dicebear.com/7.x/notionists/png?seed=XiaoWang&backgroundColor=8b5cf6",
+        "position": "right",
+        "voice": {
+          "rate": 1.05,
+          "pitch": 0.95,
+          "voice_id": "zh_male_ahu_conversation_wvae_bigtts",
+          "stability": 0.48,
+          "similarity_boost": 0.75
+        }
+      },
+      {
+        "id": "customer",
+        "name": "张总",
+        "role": "重要客户",
+        "avatar": "🤝",
+        "portrait": "https://api.dicebear.com/7.x/notionists/png?seed=ZhangZong&backgroundColor=f59e0b",
+        "position": "right",
+        "voice": {
+          "rate": 0.88,
+          "pitch": 0.9,
+          "voice_id": "zh_male_jingqiangkanye_moon_bigtts",
+          "stability": 0.6,
+          "similarity_boost": 0.8
+        }
+      }
+    ]
+  },
+  "presentation": {
+    "theme": {
+      "accent": "#6366f1",
+      "accent_glow": "rgba(99, 102, 241, 0.45)"
+    },
+    "scenes": {
+      "hq_lobby": {
+        "id": "hq_lobby",
+        "title": "总部大厅 · 文化沉浸日",
+        "subtitle": "PlayableOS · 企业文化训练",
+        "background": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1920&q=80",
+          "ken_burns": true
+        },
+        "mood": "warm",
+        "particles": "bokeh"
+      },
+      "culture_room": {
+        "id": "culture_room",
+        "title": "文化沙龙 · 与导师对话",
+        "subtitle": "情境导览",
+        "background": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1431540015161-0bf868a140d2?w=1920&q=80",
+          "ken_burns": true
+        },
+        "mood": "calm",
+        "ambient_track": "ambient_soft",
+        "particles": "dust"
+      },
+      "night_call": {
+        "id": "night_call",
+        "title": "周五傍晚 · 客户紧急来电",
+        "subtitle": "情境一 · 客户第一",
+        "background": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1920&q=80",
+          "ken_burns": true
+        },
+        "mood": "tense",
+        "particles": "pulse"
+      },
+      "open_office": {
+        "id": "open_office",
+        "title": "开放办公区 · 上线前夜",
+        "subtitle": "情境二 · 团队合作",
+        "background": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1497215843270-43b730b1a976?w=1920&q=80",
+          "ken_burns": true
+        },
+        "mood": "focus",
+        "particles": "dust"
+      },
+      "compliance_desk": {
+        "id": "compliance_desk",
+        "title": "合规办公室 · 利益冲突",
+        "subtitle": "情境三 · 诚信正直",
+        "background": {
+          "type": "image",
+          "src": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1920&q=80",
+          "ken_burns": true
+        },
+        "mood": "tense",
+        "particles": "none"
+      },
+      "reflection_space": {
+        "id": "reflection_space",
+        "title": "静思空间 · 回顾与反思",
+        "subtitle": "内化价值观",
+        "background": {
+          "type": "gradient",
+          "gradient": "linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #0f172a 100%)"
+        },
+        "mood": "calm",
+        "particles": "bokeh"
+      },
+      "graduation": {
+        "id": "graduation",
+        "title": "文化演练完成",
+        "subtitle": "能力成长报告",
+        "background": {
+          "type": "gradient",
+          "gradient": "linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #0f172a 100%)"
+        },
+        "mood": "success",
+        "particles": "bokeh"
+      }
+    },
+    "node_scenes": {
+      "intro": "hq_lobby",
+      "dialogue_welcome": "culture_room",
+      "choice_customer": "night_call",
+      "feedback_customer": "culture_room",
+      "choice_teamwork": "open_office",
+      "feedback_teamwork": "open_office",
+      "choice_integrity": "compliance_desk",
+      "feedback_integrity": "compliance_desk",
+      "reflection": "reflection_space",
+      "result": "graduation"
+    },
+    "audio": {
+      "bgm": "bgm_main",
+      "voice_enabled": true,
+      "tts": {
+        "provider": "volcengine",
+        "model_id": "seed-tts-2.0-standard",
+        "fallback": "browser"
+      },
+      "tracks": {
+        "bgm_main": {
+          "src": "https://assets.mixkit.co/music/preview/mixkit-spirit-of-the-digital-world-298.mp3",
+          "loop": true,
+          "volume": 0.22
+        },
+        "ambient_soft": {
+          "src": "https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3",
+          "loop": true,
+          "volume": 0.12
+        }
+      },
+      "sfx": {
+        "click": "https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3",
+        "success": "https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3",
+        "warning": "https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3",
+        "phone_ring": "https://assets.mixkit.co/active_storage/sfx/1366/1366-preview.mp3",
+        "reveal": "https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3",
+        "whoosh": "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
+      }
+    },
+    "character_overrides": {
+      "mentor": {
+        "emotions": {
+          "encouraging": "https://api.dicebear.com/7.x/notionists/png?seed=LinJieHappy&backgroundColor=6366f1",
+          "serious": "https://api.dicebear.com/7.x/notionists/png?seed=LinJieSerious&backgroundColor=4338ca"
+        }
+      }
+    }
+  },
+  "experience": {
+    "entry": "intro",
+    "nodes": [
+      {
+        "id": "intro",
+        "type": "intro",
+        "title": "欢迎",
+        "scene_id": "hq_lobby",
+        "next": "dialogue_welcome",
+        "transition": "fade"
+      },
+      {
+        "id": "dialogue_welcome",
+        "type": "dialogue",
+        "title": "文化导览",
+        "scene_id": "culture_room",
+        "next": "choice_customer",
+        "transition": "dissolve"
+      },
+      {
+        "id": "choice_customer",
+        "type": "choice",
+        "title": "情境一：客户第一",
+        "scene_id": "night_call",
+        "sfx": "phone_ring",
+        "next": "feedback_customer",
+        "transition": "slide"
+      },
+      {
+        "id": "feedback_customer",
+        "type": "feedback",
+        "title": "反馈",
+        "scene_id": "culture_room",
+        "next": "choice_teamwork"
+      },
+      {
+        "id": "choice_teamwork",
+        "type": "choice",
+        "title": "情境二：团队合作",
+        "scene_id": "open_office",
+        "next": "feedback_teamwork"
+      },
+      {
+        "id": "feedback_teamwork",
+        "type": "feedback",
+        "title": "反馈",
+        "scene_id": "open_office",
+        "next": "choice_integrity"
+      },
+      {
+        "id": "choice_integrity",
+        "type": "choice",
+        "title": "情境三：诚信正直",
+        "scene_id": "compliance_desk",
+        "next": "feedback_integrity"
+      },
+      {
+        "id": "feedback_integrity",
+        "type": "feedback",
+        "title": "反馈",
+        "scene_id": "compliance_desk",
+        "next": "reflection"
+      },
+      {
+        "id": "reflection",
+        "type": "reflection",
+        "title": "反思",
+        "scene_id": "reflection_space",
+        "next": "result",
+        "transition": "zoom"
+      },
+      {
+        "id": "result",
+        "type": "result",
+        "title": "成长报告",
+        "scene_id": "graduation"
+      }
+    ]
+  },
+  "interactions": {
+    "intros": {
+      "intro": {
+        "headline": "欢迎加入，开始你的文化之旅",
+        "tagline": "Corporate Culture Immersion",
+        "logo_text": "PO",
+        "body": "在接下来的 12 分钟里，你将步入真实职场场景——听见客户的紧急来电、感受团队协作的压力、面对利益冲突的抉择。\n\n这不是 PPT 考试，而是一次沉浸式视听演练。请佩戴耳机，跟随直觉做出选择。",
+        "cta": "进入沉浸式演练"
+      }
+    },
+    "dialogues": {
+      "dialogue_welcome": {
+        "character_id": "mentor",
+        "lines": [
+          {
+            "text": "你好！我是林姐，负责新人文化融入。今天我们不看 PPT——你会亲身走进几个真实发生过的职场场景。",
+            "emotion": "encouraging"
+          },
+          {
+            "text": "公司有四项核心价值观：客户第一、团队合作、诚信正直、拥抱变化。文化不是墙上的标语，而是你每一次选择背后的判断。",
+            "emotion": "serious"
+          },
+          {
+            "text": "准备好了吗？第一个场景：周五傍晚，你的手机响了——重要客户张总来电。记住，客户第一不是口号，是优先级。",
+            "emotion": "encouraging",
+            "sfx": "whoosh"
+          }
+        ]
+      }
+    },
+    "choices": {
+      "choice_customer": {
+        "prompt": "📞 张总紧急来电：系统出现数据异常，影响明日汇报。按规定需走 IT 工单（24 小时响应），但张总希望今晚必须解决。屏幕上的工单系统还在倒计时……你会怎么做？",
+        "character_id": "customer",
+        "sfx": "phone_ring",
+        "options": [
+          {
+            "id": "a",
+            "text": "告知张总按规定走工单，明天 IT 会处理",
+            "feedback": "流程合规，但未体现「客户第一」。在客户面临重大损失风险时，应主动协调资源、升级处理，而非简单推给流程。",
+            "score": 30
+          },
+          {
+            "id": "b",
+            "text": "立即拉群协调 IT 和相关负责人，今晚优先处理，同时同步进展给张总",
+            "feedback": "很好！客户第一意味着在合规前提下，把客户成功放在首位。主动协调、透明沟通，正是我们倡导的做法。",
+            "score": 95
+          },
+          {
+            "id": "c",
+            "text": "自己先尝试远程排查，不行再说",
+            "feedback": "主动性值得肯定，但独自排查可能延误时间，也未让客户感知到重视。团队合作 + 客户第一 = 快速拉通对的人。",
+            "score": 55
+          }
+        ]
+      },
+      "choice_teamwork": {
+        "prompt": "💻 上线前夜，你注意到隔壁组小王的代码有 bug，可能导致你的模块也延期。Slack 消息在闪烁，领导明天要看进度——你会？",
+        "character_id": "colleague",
+        "options": [
+          {
+            "id": "a",
+            "text": "私下找小王沟通，一起修复，对外统一口径",
+            "feedback": "完美体现团队合作！我们追求的不是「谁对谁错」，而是「一起把事做成」。私下沟通、共同担责，是成熟协作的方式。",
+            "score": 95
+          },
+          {
+            "id": "b",
+            "text": "在群里直接 @小王 指出问题，让大家都知道",
+            "feedback": "公开指出问题容易造成对立，不符合团队合作精神。对事不对人，私下沟通更有效。",
+            "score": 25
+          },
+          {
+            "id": "c",
+            "text": "不管了，先保自己的模块按时上线",
+            "feedback": "只顾自己交付，忽视整体目标，违背团队合作。我们是一个团队，一荣俱荣。",
+            "score": 20
+          }
+        ]
+      },
+      "choice_integrity": {
+        "prompt": "📋 供应商私下发来微信：如果采购订单给他们，可以「感谢」你个人。金额不大，对方暗示这是行业惯例。合规手册就在桌角——",
+        "options": [
+          {
+            "id": "a",
+            "text": "拒绝并上报合规部门，坚持按公司采购流程公正评估",
+            "feedback": "诚信正直是我们不可触碰的底线。拒绝利益输送、主动上报，保护的不只是公司，也是你自己。",
+            "score": 100
+          },
+          {
+            "id": "b",
+            "text": "先收下，看看对方产品是否真的更好",
+            "feedback": "一旦接受好处，判断就会失真。诚信正直要求零容忍，任何「小事」都可能酿成大错。",
+            "score": 10
+          },
+          {
+            "id": "c",
+            "text": "婉拒个人好处，但暗示可以「加快流程」",
+            "feedback": "变相的利益交换同样违反诚信原则。流程公正性不容讨价还价。",
+            "score": 35
+          }
+        ]
+      }
+    },
+    "feedbacks": {
+      "feedback_customer": {
+        "title": "客户第一 · 小结",
+        "body": "客户第一不是无条件答应一切，而是在合规框架内，主动为客户成功创造路径。关键时刻的响应速度，客户会记住。",
+        "tone": "neutral"
+      },
+      "feedback_teamwork": {
+        "title": "团队合作 · 小结",
+        "body": "团队合作的核心是：共同目标 > 个人面子。发现问题、私下沟通、一起解决——这是高效团队的标准动作。",
+        "tone": "positive"
+      },
+      "feedback_integrity": {
+        "title": "诚信正直 · 小结",
+        "body": "诚信没有灰色地带。一次小的妥协，可能毁掉长期的信任。遇到利益冲突，第一时间上报合规。",
+        "tone": "constructive"
+      }
+    },
+    "reflections": {
+      "reflection": {
+        "prompt": "回顾今天的三个场景，请用一两句话写下：你觉得自己在日常工作中，最需要加强践行的是哪一项价值观？为什么？",
+        "placeholder": "例如：我觉得自己在跨部门协作时还需要更主动沟通……"
+      }
+    },
+    "results": {
+      "result": {
+        "headline": "文化演练完成",
+        "summary_template": "你在本次沉浸式企业文化演练中获得 {score} 分。{passed_message}",
+        "growth_suggestions": [
+          "建议阅读《员工行为准则》中关于客户响应时效的章节",
+          "参加下月的「跨部门协作工作坊」，提升团队合作技能",
+          "关注内网合规公告，了解最新的礼品与利益冲突政策"
+        ]
+      }
+    }
+  },
+  "assessment": {
+    "passing_score": 60,
+    "dimensions": [
+      { "name": "客户第一", "weight": 0.3 },
+      { "name": "团队合作", "weight": 0.3 },
+      { "name": "诚信正直", "weight": 0.4 }
+    ]
+  }
+}
