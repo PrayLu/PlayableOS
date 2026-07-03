@@ -216,6 +216,28 @@ export const PlayableBlueprintSchema = z.object({
   presentation: PresentationSchema.optional(),
 });
 
+/** PGE 输出 Schema — metadata.id/version 由 enrich 阶段补充 */
+export const PgeMetadataSchema = z.object({
+  id: z.string().optional(),
+  version: z.string().optional(),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  language: z.string().default("zh-CN"),
+  duration_minutes: z.coerce.number().positive(),
+  type: z.enum(["dialogue", "simulation", "challenge"]).default("simulation"),
+  tags: z.array(z.string()).default([]),
+});
+
+export const PgeBlueprintSchema = z.object({
+  metadata: PgeMetadataSchema,
+  capability: CapabilitySchema,
+  scenario: ScenarioSchema,
+  experience: ExperienceSchema,
+  interactions: InteractionSchema,
+  assessment: AssessmentSchema,
+  presentation: PresentationSchema.optional(),
+});
+
 export type Metadata = z.infer<typeof MetadataSchema>;
 export type Character = z.infer<typeof CharacterSchema>;
 export type Scene = z.infer<typeof SceneSchema>;
@@ -229,6 +251,7 @@ export type ChoiceOption = z.infer<typeof ChoiceOptionSchema>;
 export type Interaction = z.infer<typeof InteractionSchema>;
 export type Assessment = z.infer<typeof AssessmentSchema>;
 export type PlayableBlueprint = z.infer<typeof PlayableBlueprintSchema>;
+export type PgeBlueprint = z.infer<typeof PgeBlueprintSchema>;
 
 export function parsePlayableBlueprint(data: unknown): PlayableBlueprint {
   return PlayableBlueprintSchema.parse(data);
@@ -236,4 +259,8 @@ export function parsePlayableBlueprint(data: unknown): PlayableBlueprint {
 
 export function safeParsePlayableBlueprint(data: unknown) {
   return PlayableBlueprintSchema.safeParse(data);
+}
+
+export function safeParsePgeBlueprint(data: unknown) {
+  return PgeBlueprintSchema.safeParse(data);
 }

@@ -85,11 +85,12 @@ export class VolcengineProvider implements TtsProvider {
         ...(request.speech_rate !== undefined
           ? { speech_rate: request.speech_rate }
           : {}),
-        ...(request.emotion ? { emotion: request.emotion } : {}),
+        ...(request.emotion && !useTts2 ? { emotion: request.emotion } : {}),
       },
-      additions: {
+      // 火山 API 要求 additions 为 JSON 字符串，不能是 object
+      additions: JSON.stringify({
         explicit_language: request.language.startsWith("zh") ? "zh" : "en",
-      },
+      }),
     };
 
     if (useTts2) {

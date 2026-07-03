@@ -1,0 +1,463 @@
+{
+  "metadata": {
+    "id": "yangming-gaoyu-001",
+    "version": "1.0.0",
+    "title": "破心中贼 · 告谕浰头巢贼",
+    "description": "代入被胁从的山民，在告谕中唤醒良知，经历六关抉择，体悟阳明「威恩并济、致良知」。",
+    "language": "zh-CN",
+    "duration_minutes": 18,
+    "type": "simulation",
+    "tags": ["阳明心学", "告谕浰头巢贼", "致良知", "经典", "润泽园"]
+  },
+  "capability": {
+    "target": "阳明心学 · 致良知与知行合一",
+    "learning_objective": "通过《告谕浰头巢贼》情境演练，理解「人人有良知、被迫与甘愿有别、威恩并济」，并在现代情境中辨识「心中贼」。",
+    "rubric": [
+      "能共情告谕中「父母妻子、同此心」的良知唤醒",
+      "能区分被迫胁从与甘愿为恶",
+      "在压力下仍愿改行从善，体现知行合一",
+      "理解威恩并济：给出路，也守红线",
+      "联系当下，反思自身「心中贼」"
+    ]
+  },
+  "scenario": {
+    "context": "正德十二年，浰头山中。你本是赣南农户，因官府催逼、大户侵夺，一时错起念头，被卷入流寨。阳明先生巡抚南赣，在兴兵前先遣人送告谕。今日，传谕使到了营前。",
+    "setting": "赣南 · 浰头山寨",
+    "characters": [
+      {
+        "id": "mentor",
+        "name": "阳明先生",
+        "role": "巡抚 · 告谕作者",
+        "avatar": "📜",
+        "portrait": "/playables/yangming-gaoyu/portrait-yangming.png",
+        "position": "left",
+        "voice": {
+          "rate": 0.84,
+          "pitch": 0.92,
+          "voice_id": "zh_male_jingqiangkanye_moon_bigtts",
+          "stability": 0.62,
+          "similarity_boost": 0.82
+        }
+      },
+      {
+        "id": "colleague",
+        "name": "阿七",
+        "role": "同寨流民",
+        "avatar": "🔥",
+        "portrait": "/playables/yangming-gaoyu/portrait-aqi.png",
+        "position": "right",
+        "voice": {
+          "rate": 0.92,
+          "pitch": 0.95,
+          "voice_id": "zh_male_ahu_conversation_wvae_bigtts",
+          "stability": 0.52,
+          "similarity_boost": 0.78
+        }
+      },
+      {
+        "id": "partner",
+        "name": "传谕使",
+        "role": "宣读告谕",
+        "avatar": "🏮",
+        "portrait": "/playables/yangming-gaoyu/portrait-messenger.png",
+        "position": "right",
+        "voice": {
+          "rate": 0.86,
+          "pitch": 1.0,
+          "voice_id": "zh_female_xiaohe_uranus_bigtts",
+          "stability": 0.6,
+          "similarity_boost": 0.85
+        }
+      }
+    ]
+  },
+  "presentation": {
+    "theme": {
+      "accent": "#92400e",
+      "accent_glow": "rgba(146, 64, 14, 0.4)"
+    },
+    "scenes": {
+      "mountains": {
+        "id": "mountains",
+        "title": "赣南 · 浰头",
+        "subtitle": "正德十二年",
+        "background": {
+          "type": "image",
+          "src": "/playables/yangming-gaoyu/scene-mountains.png",
+          "ken_burns": true
+        },
+        "mood": "warm",
+        "particles": "bokeh"
+      },
+      "camp": {
+        "id": "camp",
+        "title": "山寨 · 夜火",
+        "subtitle": "第一关",
+        "background": {
+          "type": "image",
+          "src": "/playables/yangming-gaoyu/scene-camp.png",
+          "ken_burns": true
+        },
+        "mood": "tense",
+        "ambient_track": "ambient_soft",
+        "particles": "pulse"
+      },
+      "proclamation": {
+        "id": "proclamation",
+        "title": "告谕到营",
+        "subtitle": "听读告谕",
+        "background": {
+          "type": "image",
+          "src": "/playables/yangming-gaoyu/scene-proclamation.png",
+          "ken_burns": true
+        },
+        "mood": "calm",
+        "particles": "dust"
+      },
+      "mother": {
+        "id": "mother",
+        "title": "忆家山",
+        "subtitle": "父母妻子",
+        "background": {
+          "type": "image",
+          "src": "/playables/yangming-gaoyu/scene-mother.png",
+          "ken_burns": true
+        },
+        "mood": "warm",
+        "particles": "bokeh"
+      },
+      "crossroads": {
+        "id": "crossroads",
+        "title": "山口 · 抉择",
+        "subtitle": "第四关",
+        "background": {
+          "type": "image",
+          "src": "/playables/yangming-gaoyu/scene-crossroads.png",
+          "ken_burns": true
+        },
+        "mood": "focus",
+        "particles": "none"
+      },
+      "dawn": {
+        "id": "dawn",
+        "title": "破心中贼",
+        "subtitle": "致良知",
+        "background": {
+          "type": "image",
+          "src": "/playables/yangming-gaoyu/scene-dawn.png",
+          "ken_burns": true
+        },
+        "mood": "success",
+        "particles": "bokeh"
+      },
+      "reflection_space": {
+        "id": "reflection_space",
+        "title": "静思",
+        "background": {
+          "type": "gradient",
+          "gradient": "linear-gradient(135deg, #1c1917 0%, #44403c 40%, #0f172a 100%)"
+        },
+        "mood": "calm",
+        "particles": "bokeh"
+      }
+    },
+    "node_scenes": {
+      "intro": "mountains",
+      "dialogue_fall": "camp",
+      "choice_1": "camp",
+      "dialogue_proclamation": "proclamation",
+      "choice_2": "mother",
+      "choice_3": "camp",
+      "dialogue_bridge": "proclamation",
+      "choice_4": "crossroads",
+      "choice_5": "dawn",
+      "dialogue_closing": "dawn",
+      "reflection": "reflection_space",
+      "result": "dawn"
+    },
+    "audio": {
+      "bgm": "bgm_main",
+      "voice_enabled": true,
+      "tts": {
+        "provider": "volcengine",
+        "model_id": "seed-tts-2.0-standard",
+        "fallback": "browser"
+      },
+      "tracks": {
+        "bgm_main": {
+          "src": "https://assets.mixkit.co/music/preview/mixkit-spirit-of-the-digital-world-298.mp3",
+          "loop": true,
+          "volume": 0.16
+        },
+        "ambient_soft": {
+          "src": "https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3",
+          "loop": true,
+          "volume": 0.08
+        }
+      },
+      "sfx": {
+        "click": "https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3",
+        "success": "https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3",
+        "warning": "https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3",
+        "reveal": "https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3",
+        "whoosh": "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3",
+        "tap": "https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"
+      }
+    }
+  },
+  "experience": {
+    "entry": "intro",
+    "nodes": [
+      { "id": "intro", "type": "intro", "title": "开篇", "next": "dialogue_fall", "transition": "fade" },
+      { "id": "dialogue_fall", "type": "dialogue", "title": "落草", "next": "choice_1" },
+      { "id": "choice_1", "type": "choice", "title": "第一关", "next": "dialogue_proclamation", "transition": "slide" },
+      { "id": "dialogue_proclamation", "type": "dialogue", "title": "告谕", "next": "choice_2" },
+      { "id": "choice_2", "type": "choice", "title": "第二关", "next": "choice_3" },
+      { "id": "choice_3", "type": "choice", "title": "第三关", "next": "dialogue_bridge" },
+      { "id": "dialogue_bridge", "type": "dialogue", "title": "威恩并济", "next": "choice_4" },
+      { "id": "choice_4", "type": "choice", "title": "第四关", "next": "choice_5" },
+      { "id": "choice_5", "type": "choice", "title": "第五关", "next": "dialogue_closing" },
+      { "id": "dialogue_closing", "type": "dialogue", "title": "结业", "next": "reflection", "transition": "dissolve" },
+      { "id": "reflection", "type": "reflection", "title": "反思", "next": "result", "transition": "zoom" },
+      { "id": "result", "type": "result", "title": "成长报告" }
+    ]
+  },
+  "interactions": {
+    "intros": {
+      "intro": {
+        "headline": "破心中贼",
+        "tagline": "告谕浰头巢贼 · 情境演练",
+        "logo_text": "阳明",
+        "body": "正德十二年，王阳明巡抚南赣。\n\n平漳寇后，他知贼中多是被胁从之人，不忍「不教而杀」，先遣告谕。\n\n你，是浰头山中一个被卷入的普通山民。\n\n接下来六关，你将听见告谕、面对同伙、在良知与恐惧之间做出选择。",
+        "cta": "进入山中"
+      }
+    },
+    "dialogues": {
+      "dialogue_fall": {
+        "character_id": "colleague",
+        "lines": [
+          {
+            "text": "还愣什么？官军迟早要打过来。你在山下那几亩薄田，催税的吏员可曾饶过你？",
+            "emotion": "serious"
+          },
+          {
+            "text": "阿七跟你说实话：在这山上，至少能吃饱。阳明？听说是个读书人巡抚，未必真敢进山。",
+            "emotion": "neutral"
+          },
+          {
+            "text": "今日营前来了传谕使，说是巡抚亲笔告谕。弟兄们都在听，你也去。",
+            "emotion": "concerned",
+            "sfx": "whoosh"
+          }
+        ]
+      },
+      "dialogue_proclamation": {
+        "character_id": "partner",
+        "lines": [
+          {
+            "text": "巡抚告谕：本院专以弭盗安民为职。审知漳寇之中，倡恶不过四五十人，党恶四千余，其余多系一时被胁，不觉惨然兴哀。",
+            "emotion": "serious"
+          },
+          {
+            "text": "人情之所共耻，莫过于身被为盗之名。若有人骂尔等为盗，尔必怫然而怒。尔等岂可心恶其名而身蹈其实？",
+            "emotion": "encouraging"
+          },
+          {
+            "text": "尔等各人有父母，各人有妻子，如何忍作这样事？若速改悔，既往不咎。若仍旧为恶，官兵必至。",
+            "emotion": "serious"
+          },
+          {
+            "text": "闻尔等辛苦为贼，所得苦亦不多。何不用为贼的勤苦精力，用于耕农商贾，安享逸乐？",
+            "emotion": "encouraging"
+          }
+        ]
+      },
+      "dialogue_bridge": {
+        "character_id": "mentor",
+        "lines": [
+          {
+            "text": "我每为尔等思念及此，辄至于终夜不能安寝，亦无非欲为尔等寻一生路。",
+            "emotion": "encouraging"
+          },
+          {
+            "text": "今谓我全无杀尔之心，亦是诳尔；若谓我必欲杀尔，又非吾之本心。譬如父母十子，二人背逆，父母须除去二人，然后八人安生。",
+            "emotion": "serious"
+          },
+          {
+            "text": "若此二子一旦悔恶迁善，号泣投诚，为父母者亦必哀悯而收之。不忍杀其子，乃父母之本心也。",
+            "emotion": "encouraging",
+            "sfx": "success"
+          }
+        ]
+      },
+      "dialogue_closing": {
+        "character_id": "mentor",
+        "lines": [
+          {
+            "text": "民吾同胞，尔等皆吾赤子。我不能抚恤尔等而至于杀尔，痛哉痛哉。",
+            "emotion": "concerned"
+          },
+          {
+            "text": "破山中贼易，破心中贼难。山中贼已破，尔心中之贼，须尔自破。",
+            "emotion": "serious"
+          },
+          {
+            "text": "好自思量。我言已无不尽，我心已无不尽。",
+            "emotion": "encouraging",
+            "sfx": "success"
+          }
+        ]
+      }
+    },
+    "choices": {
+      "choice_1": {
+        "prompt": "第一关 · 落草之由。阿七问你：你到底是迫不得已，还是心里也认了这条道？回想你入山那日——",
+        "character_id": "colleague",
+        "options": [
+          {
+            "id": "a",
+            "text": "我是被大户逼债、被吏员催税，一时错起念头，并非甘愿为盗",
+            "feedback": "告谕中所言：或有不得已者，为官府所迫，为大户所侵，一时错起念头。此苦情，甚是可悯。但须真切悔悟，不可久蹈其途。",
+            "score": 85
+          },
+          {
+            "id": "b",
+            "text": "既然上了山，就要够狠，不然被人欺负",
+            "feedback": "心恶盗名而身蹈其实，是为甘愿。阳明言：其中倡恶者有限，若仍旧为恶，必不宽贷。",
+            "score": 15
+          },
+          {
+            "id": "c",
+            "text": "我入山是被裹挟，但心里一直不安，想寻机会离开",
+            "feedback": "良知未泯。告谕正是为「一时被胁」之人寻一生路。死人求生路，须如当初活人寻死路一般，拚死出来。",
+            "score": 95
+          }
+        ]
+      },
+      "choice_2": {
+        "prompt": "第二关 · 同此心。传谕使念到：若有人掠尔妻女，尔必怀恨切骨。又念：尔等各人有父母妻子。你想起家中老母……",
+        "character_id": "partner",
+        "options": [
+          {
+            "id": "a",
+            "text": "当众落泪，不再隐瞒：我想回家见娘",
+            "feedback": "「人同此心，尔宁独不知？」羞耻与思念，正是良知显现。阳明抚谕，如父母待逆子，哀悯而收之。",
+            "score": 95
+          },
+          {
+            "id": "b",
+            "text": "低头不语，夜里独自哭，白天仍跟队行事",
+            "feedback": "良知已动，但尚未知行合一。告谕言：今欲改行从善，乃是死人求生路，乃反不敢，何也？",
+            "score": 55
+          },
+          {
+            "id": "c",
+            "text": "阿七说得对，这是读书人的把戏，不能信",
+            "feedback": "心多猜疑，久习恶毒。阳明言：岂知我无故杀一鸡犬尚且不忍，况人命关天。",
+            "score": 20
+          }
+        ]
+      },
+      "choice_3": {
+        "prompt": "第三关 · 同伙压力。池头领怀疑你动摇，命你在下次劫掠中「杀一人立威」，以证忠心。",
+        "character_id": "colleague",
+        "sfx": "warning",
+        "options": [
+          {
+            "id": "a",
+            "text": "照做，先保命再说",
+            "feedback": "忍于杀人，心多猜疑，与告谕所戒「身蹈其实」无异。轻易伤人，冥冥之中，断有还报。",
+            "score": 5
+          },
+          {
+            "id": "b",
+            "text": "假意答应，暗中寻路下山，向官军投诚",
+            "feedback": "知行合一。告谕：若尔等肯拚死出来，求改行从善，我官府岂有必要杀汝之理？",
+            "score": 90
+          },
+          {
+            "id": "c",
+            "text": "当场拒绝：我不杀无辜，要杀便杀我",
+            "feedback": "勇气可嘉，致良知于危境。亦须审时度势，寻机投诚，勿徒逞血气。",
+            "score": 75
+          }
+        ]
+      },
+      "choice_4": {
+        "prompt": "第四关 · 降或不降。官军已在山下立招抚牌，既往不咎。你已到山口，阿七在身后喊：回来！",
+        "character_id": "colleague",
+        "options": [
+          {
+            "id": "a",
+            "text": "抛下兵器，号泣投诚，请求归籍",
+            "feedback": "「若速改悔，既往不咎。」阳明视尔为良民，抚如赤子。悔恶迁善，即顺父母本心。",
+            "score": 100
+          },
+          {
+            "id": "b",
+            "text": "再观望几日，看风头再说",
+            "feedback": "迟疑之间，良机易失。告谕言：一年不尽至于两年，两年不尽至于三年。",
+            "score": 40
+          },
+          {
+            "id": "c",
+            "text": "跟阿七回寨，与官军对抗",
+            "feedback": "仍旧为恶，非我杀之，乃天杀之。阳明本无好杀之心，然尔等若害良民，则不得不剿。",
+            "score": 10
+          }
+        ]
+      },
+      "choice_5": {
+        "prompt": "第五关 · 今时之思。团队里有人曾走过弯路，现已改正。有人主张永久封杀，有人主张给路径与监督。你如何看？",
+        "character_id": "mentor",
+        "options": [
+          {
+            "id": "a",
+            "text": "一律开除，以儆效尤，不给第二次机会",
+            "feedback": "未辨被迫与甘愿，亦未给改行从善之路。告谕之智，在威恩并济，非无原则纵容。",
+            "score": 35
+          },
+          {
+            "id": "b",
+            "text": "视其是否真切悔悟、是否再犯，给路径与监督，如抚新归之民",
+            "feedback": "深得告谕之心：悔恶迁善，哀悯而收之；屡教不改首恶，则必剿。致良知，亦须明边界。",
+            "score": 95
+          },
+          {
+            "id": "c",
+            "text": "不论对错，一律包庇自己人",
+            "feedback": "此非仁，是私。阳明言：不能抚恤而至于杀，痛哉——正因顾念良民与赤子。",
+            "score": 15
+          }
+        ]
+      }
+    },
+    "feedbacks": {},
+    "reflections": {
+      "reflection": {
+        "prompt": "告谕读罢，阳明言「破心中贼难」。写一种你心中的「贼」（如贪、惧、怨、傲），以及你想如何启用良知。",
+        "placeholder": "例如：我心中之贼是惧——遇压力则随大流。愿学告谕，在 shame 中看见良知……"
+      }
+    },
+    "results": {
+      "result": {
+        "headline": "告谕在心，破贼在己",
+        "summary_template": "你在《告谕浰头巢贼》情境演练中获得 {score} 分。{passed_message}",
+        "growth_suggestions": [
+          "重读告谕原文，标记「同此心」「父母十子」两段",
+          "润泽园 APP 阳明心学课程，结合心道德事四部曲",
+          "遇团队冲突时，先问：此人是被迫，还是甘愿？可否给改行从善之路？"
+        ]
+      }
+    }
+  },
+  "assessment": {
+    "passing_score": 60,
+    "dimensions": [
+      { "name": "致良知", "weight": 0.35 },
+      { "name": "明辨被迫与甘愿", "weight": 0.3 },
+      { "name": "知行合一", "weight": 0.2 },
+      { "name": "威恩并济", "weight": 0.15 }
+    ]
+  }
+}

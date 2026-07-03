@@ -3,11 +3,14 @@ import type { PlayableBlueprint } from "@playableos/blueprint-schema";
 import { promises as fs } from "fs";
 import path from "path";
 
+import type { KnowledgeSummary } from "@/lib/pge/analyze";
+
 export interface StoredPlayable {
   id: string;
   createdAt: string;
   sourceFileName: string;
   sourceTextPreview: string;
+  knowledgeSummary?: KnowledgeSummary;
   blueprint: PlayableBlueprint;
 }
 

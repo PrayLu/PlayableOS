@@ -68,11 +68,31 @@ JSON 结构：
 export function buildPgeUserPrompt(
   documentText: string,
   fileName: string,
+  knowledgeSummary?: {
+    title: string;
+    topic: string;
+    core_points: string[];
+    capability_targets: string[];
+    scenario_ideas: string[];
+    recommended_dimensions: string[];
+  },
 ): string {
+  const summaryBlock = knowledgeSummary
+    ? `
+KPG 知识分析结果（请在此基础上设计训练）：
+- 建议标题：${knowledgeSummary.title}
+- 主题：${knowledgeSummary.topic}
+- 核心知识点：${knowledgeSummary.core_points.join("；")}
+- 能力目标：${knowledgeSummary.capability_targets.join("；")}
+- 推荐情境：${knowledgeSummary.scenario_ideas.join("；")}
+- 评估维度：${knowledgeSummary.recommended_dimensions.join("、")}
+`
+    : "";
+
   return `请根据以下企业知识文档，生成一个沉浸式情景对话训练 Playable Blueprint。
 
 文档名称：${fileName}
-
+${summaryBlock}
 ---文档内容开始---
 ${documentText}
 ---文档内容结束---

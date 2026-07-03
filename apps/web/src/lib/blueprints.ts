@@ -3,6 +3,8 @@ import {
   type PlayableBlueprint,
 } from "@playableos/blueprint-schema";
 import corporateCulture from "../../../../fixtures/blueprints/corporate-culture.json";
+import runzeyuanOnboarding from "../../../../fixtures/blueprints/runzeyuan-onboarding.json";
+import yangmingGaoyu from "../../../../fixtures/blueprints/yangming-gaoyu.json";
 import { getStoredPlayable } from "./store/playables";
 
 export interface PlayableEntry {
@@ -15,6 +17,8 @@ export interface PlayableEntry {
 
 const FIXTURES: Record<string, PlayableBlueprint> = {
   "corporate-culture": parsePlayableBlueprint(corporateCulture),
+  "runzeyuan-onboarding": parsePlayableBlueprint(runzeyuanOnboarding),
+  "yangming-gaoyu": parsePlayableBlueprint(yangmingGaoyu),
 };
 
 export async function getBlueprint(id: string): Promise<PlayableBlueprint | null> {

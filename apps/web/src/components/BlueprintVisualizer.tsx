@@ -16,9 +16,9 @@ import type { PlayableBlueprint } from "@playableos/blueprint-schema";
 const NODE_COLORS: Record<string, string> = {
   intro: "#6366f1",
   dialogue: "#8b5cf6",
-  choice: "#f59e0b",
-  feedback: "#06b6d4",
-  reflection: "#10b981",
+  choice: "#a855f7",
+  feedback: "#22d3ee",
+  reflection: "#34d399",
   result: "#ec4899",
 };
 
@@ -71,7 +71,7 @@ export function BlueprintVisualizer({ blueprint }: BlueprintVisualizerProps) {
           source: node.id,
           target: node.next,
           markerEnd: { type: MarkerType.ArrowClosed },
-          style: { stroke: "#94a3b8" },
+          style: { stroke: "#818cf8" },
         });
       }
 
@@ -85,7 +85,7 @@ export function BlueprintVisualizer({ blueprint }: BlueprintVisualizerProps) {
               target: opt.next_node,
               label: opt.id.toUpperCase(),
               markerEnd: { type: MarkerType.ArrowClosed },
-              style: { stroke: "#f59e0b", strokeDasharray: "4 4" },
+              style: { stroke: "#c084fc", strokeDasharray: "4 4" },
             });
           }
         });
@@ -96,7 +96,7 @@ export function BlueprintVisualizer({ blueprint }: BlueprintVisualizerProps) {
   }, [blueprint]);
 
   return (
-    <div className="h-[520px] overflow-hidden rounded-2xl border border-[var(--border)] bg-white">
+    <div className="flow-dark h-[520px] overflow-hidden rounded-xl">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -106,16 +106,17 @@ export function BlueprintVisualizer({ blueprint }: BlueprintVisualizerProps) {
         elementsSelectable={false}
         proOptions={{ hideAttribution: true }}
       >
-        <Background gap={16} size={1} color="#e2e8f0" />
+        <Background gap={20} size={1} color="rgba(129,140,248,0.08)" />
         <Controls showInteractive={false} />
         <MiniMap
           nodeColor={(n) => {
             const type = blueprint.experience.nodes.find(
               (node) => node.id === n.id,
             )?.type;
-            return NODE_COLORS[type ?? ""] ?? "#94a3b8";
+            return NODE_COLORS[type ?? ""] ?? "#64748b";
           }}
-          maskColor="rgba(255,255,255,0.7)"
+          maskColor="rgba(3,7,18,0.85)"
+          style={{ background: "rgba(15,23,42,0.6)" }}
         />
       </ReactFlow>
     </div>

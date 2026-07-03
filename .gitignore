@@ -6,4 +6,5 @@ dist/
 .env
 .env.local
 apps/web/data/generated/
+apps/web/data/sessions/
 .DS_Store

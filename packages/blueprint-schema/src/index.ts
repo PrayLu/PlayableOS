@@ -8,10 +8,13 @@ export {
   InteractionSchema,
   MetadataSchema,
   PlayableBlueprintSchema,
+  PgeBlueprintSchema,
+  PgeMetadataSchema,
   PresentationSchema,
   SceneSchema,
   ScenarioSchema,
   parsePlayableBlueprint,
+  safeParsePgeBlueprint,
   safeParsePlayableBlueprint,
 } from "./schema.js";
 
@@ -26,6 +29,7 @@ export type {
   Interaction,
   Metadata,
   PlayableBlueprint,
+  PgeBlueprint,
   Presentation,
   Scene,
   Scenario,

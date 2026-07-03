@@ -1,0 +1,351 @@
+{
+  "metadata": {
+    "id": "runzeyuan-onboarding-002",
+    "version": "2.0.0",
+    "title": "润泽园新人入职 · 沉浸式融入演练",
+    "description": "5 关情境 + 多段互动对话：高压线、考勤、心学文化、用餐礼仪、诚信合规。",
+    "language": "zh-CN",
+    "duration_minutes": 18,
+    "type": "simulation",
+    "tags": ["润泽园", "新员工", "入职", "心学", "制度", "五关"]
+  },
+  "capability": {
+    "target": "润泽园新人文化融入与制度合规",
+    "learning_objective": "通过五关情境演练，掌握高压线红线、飞书考勤、心学学习文化、用餐礼仪与诚信合规，理解四句价值观与四深期待。",
+    "rubric": [
+      "牢记四条高压线，零触碰红线",
+      "规范飞书考勤与外出审批",
+      "呵护成长群真实学习，践行四深",
+      "用餐文化与不剩一粒米",
+      "拒绝利益输送，诚信正直"
+    ]
+  },
+  "scenario": {
+    "context": "你是润泽园教育的新伙伴，入职第一周。HR 悦迪姐带你完成五关入职演练，每一关都是新人真实会遇到的选择。",
+    "setting": "北京润泽园 · 知行合一大学堂",
+    "characters": [
+      {
+        "id": "mentor",
+        "name": "悦迪姐",
+        "role": "心力资源 · HR",
+        "avatar": "👩‍💼",
+        "portrait": "https://api.dicebear.com/7.x/notionists/png?seed=QinYuedi&backgroundColor=6366f1",
+        "position": "left",
+        "voice": {
+          "rate": 0.86,
+          "pitch": 1.02,
+          "voice_id": "zh_female_xiaohe_uranus_bigtts",
+          "stability": 0.62,
+          "similarity_boost": 0.85
+        }
+      },
+      {
+        "id": "colleague",
+        "name": "明哥",
+        "role": "老带新伙伴",
+        "avatar": "👨‍💻",
+        "portrait": "https://api.dicebear.com/7.x/notionists/png?seed=MingGe&backgroundColor=8b5cf6",
+        "position": "right",
+        "voice": {
+          "rate": 0.9,
+          "pitch": 0.96,
+          "voice_id": "zh_male_ahu_conversation_wvae_bigtts",
+          "stability": 0.55,
+          "similarity_boost": 0.8
+        }
+      },
+      {
+        "id": "partner",
+        "name": "芳野姐",
+        "role": "求是中心伙伴",
+        "avatar": "🤝",
+        "portrait": "https://api.dicebear.com/7.x/notionists/png?seed=LiuFangye&backgroundColor=a855f7",
+        "position": "right",
+        "voice": {
+          "rate": 0.88,
+          "pitch": 1.05,
+          "voice_id": "zh_female_xiaohe_uranus_bigtts",
+          "stability": 0.6,
+          "similarity_boost": 0.83
+        }
+      }
+    ]
+  },
+  "presentation": {
+    "theme": { "accent": "#6366f1", "accent_glow": "rgba(99, 102, 241, 0.45)" },
+    "scenes": {
+      "runze_lobby": {
+        "id": "runze_lobby",
+        "title": "润泽园 · 欢迎新伙伴",
+        "subtitle": "五关入职演练",
+        "background": { "type": "image", "src": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1920&q=80", "ken_burns": true },
+        "mood": "warm",
+        "particles": "bokeh"
+      },
+      "hr_room": {
+        "id": "hr_room",
+        "title": "心力资源 · 入职导览",
+        "background": { "type": "image", "src": "https://images.unsplash.com/photo-1497215843270-43b730b1a976?w=1920&q=80", "ken_burns": true },
+        "mood": "calm",
+        "ambient_track": "ambient_soft",
+        "particles": "dust"
+      },
+      "compliance_scene": {
+        "id": "compliance_scene",
+        "title": "第一关 · 高压线",
+        "background": { "type": "image", "src": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1920&q=80", "ken_burns": true },
+        "mood": "tense",
+        "particles": "pulse"
+      },
+      "feishu_scene": {
+        "id": "feishu_scene",
+        "title": "第二关 · 考勤规范",
+        "background": { "type": "image", "src": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1920&q=80", "ken_burns": true },
+        "mood": "focus",
+        "particles": "dust"
+      },
+      "learning_scene": {
+        "id": "learning_scene",
+        "title": "第三关 · 心学文化",
+        "background": { "type": "image", "src": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80", "ken_burns": true },
+        "mood": "calm",
+        "particles": "bokeh"
+      },
+      "dining_scene": {
+        "id": "dining_scene",
+        "title": "第四关 · 用餐文化",
+        "background": { "type": "image", "src": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80", "ken_burns": true },
+        "mood": "warm",
+        "particles": "bokeh"
+      },
+      "integrity_scene": {
+        "id": "integrity_scene",
+        "title": "第五关 · 诚信合规",
+        "background": { "type": "image", "src": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&q=80", "ken_burns": true },
+        "mood": "tense",
+        "particles": "none"
+      },
+      "reflection_space": {
+        "id": "reflection_space",
+        "title": "静思空间",
+        "background": { "type": "gradient", "gradient": "linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #0f172a 100%)" },
+        "mood": "calm",
+        "particles": "bokeh"
+      },
+      "graduation": {
+        "id": "graduation",
+        "title": "演练完成",
+        "background": { "type": "gradient", "gradient": "linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #0f172a 100%)" },
+        "mood": "success",
+        "particles": "bokeh"
+      }
+    },
+    "node_scenes": {
+      "intro": "runze_lobby",
+      "dialogue_welcome": "hr_room",
+      "dialogue_values": "hr_room",
+      "choice_1": "compliance_scene",
+      "dialogue_bridge_1": "hr_room",
+      "choice_2": "feishu_scene",
+      "dialogue_bridge_2": "feishu_scene",
+      "choice_3": "learning_scene",
+      "dialogue_bridge_3": "learning_scene",
+      "choice_4": "dining_scene",
+      "dialogue_bridge_4": "dining_scene",
+      "choice_5": "integrity_scene",
+      "dialogue_closing": "hr_room",
+      "reflection": "reflection_space",
+      "result": "graduation"
+    },
+    "audio": {
+      "bgm": "bgm_main",
+      "voice_enabled": true,
+      "tts": {
+        "provider": "volcengine",
+        "model_id": "seed-tts-2.0-standard",
+        "fallback": "browser"
+      },
+      "tracks": {
+        "bgm_main": {
+          "src": "https://assets.mixkit.co/music/preview/mixkit-spirit-of-the-digital-world-298.mp3",
+          "loop": true,
+          "volume": 0.18
+        },
+        "ambient_soft": {
+          "src": "https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3",
+          "loop": true,
+          "volume": 0.1
+        }
+      },
+      "sfx": {
+        "click": "https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3",
+        "success": "https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3",
+        "warning": "https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3",
+        "phone_ring": "https://assets.mixkit.co/active_storage/sfx/1366/1366-preview.mp3",
+        "reveal": "https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3",
+        "whoosh": "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3",
+        "tap": "https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"
+      }
+    }
+  },
+  "experience": {
+    "entry": "intro",
+    "nodes": [
+      { "id": "intro", "type": "intro", "title": "欢迎", "next": "dialogue_welcome", "transition": "fade" },
+      { "id": "dialogue_welcome", "type": "dialogue", "title": "入职导览", "next": "dialogue_values", "transition": "dissolve" },
+      { "id": "dialogue_values", "type": "dialogue", "title": "四句价值观", "next": "choice_1" },
+      { "id": "choice_1", "type": "choice", "title": "第一关", "sfx": "phone_ring", "next": "dialogue_bridge_1", "transition": "slide" },
+      { "id": "dialogue_bridge_1", "type": "dialogue", "title": "关间总结", "next": "choice_2" },
+      { "id": "choice_2", "type": "choice", "title": "第二关", "next": "dialogue_bridge_2" },
+      { "id": "dialogue_bridge_2", "type": "dialogue", "title": "关间总结", "next": "choice_3" },
+      { "id": "choice_3", "type": "choice", "title": "第三关", "next": "dialogue_bridge_3" },
+      { "id": "dialogue_bridge_3", "type": "dialogue", "title": "关间总结", "next": "choice_4" },
+      { "id": "choice_4", "type": "choice", "title": "第四关", "next": "dialogue_bridge_4" },
+      { "id": "dialogue_bridge_4", "type": "dialogue", "title": "关间总结", "next": "choice_5" },
+      { "id": "choice_5", "type": "choice", "title": "第五关", "next": "dialogue_closing" },
+      { "id": "dialogue_closing", "type": "dialogue", "title": "结业寄语", "next": "reflection", "transition": "dissolve" },
+      { "id": "reflection", "type": "reflection", "title": "反思", "next": "result", "transition": "zoom" },
+      { "id": "result", "type": "result", "title": "成长报告" }
+    ]
+  },
+  "interactions": {
+    "intros": {
+      "intro": {
+        "headline": "欢迎加入润泽园大家庭",
+        "tagline": "五关入职演练 · Runzeyuan",
+        "logo_text": "润泽",
+        "body": "Hi，亲爱的新伙伴！\n\n本次演练共五关，穿插互动对话与情境选择：\n① 高压线  ② 考勤  ③ 心学文化  ④ 用餐礼仪  ⑤ 诚信合规\n\n请佩戴耳机，跟随悦迪姐一起完成。",
+        "cta": "开始五关演练"
+      }
+    },
+    "dialogues": {
+      "dialogue_welcome": {
+        "character_id": "mentor",
+        "lines": [
+          { "text": "你好，我是悦迪姐，来自心力资源中心。欢迎加入润泽园，这里既是心学教育，也是我们的精神家园。", "emotion": "encouraging" },
+          { "text": "今天不背手册。你会亲身走进五个新人都会遇到的场景，每一关都是一次真实的选择。", "emotion": "serious" },
+          { "text": "先说我们的使命，助力企业战略创新。愿景，成为企业家首选的教育品牌。", "emotion": "neutral" }
+        ]
+      },
+      "dialogue_values": {
+        "character_id": "mentor",
+        "lines": [
+          { "text": "润泽园有四句价值观。第一，人生重大秘密，是心中拥有无尽宝藏。第二，人生重大真理，是行为作用与反作用。", "emotion": "serious" },
+          { "text": "第三，人生重大战略，是建设自己心灵品质。第四，人生重大价值，是成就他人建设心灵品质。", "emotion": "serious" },
+          { "text": "我们期待你四深：对自己深沉厚重，对他人深情厚意，对决策深思熟虑，对经典深入浅出。准备好了吗？第一关开始。", "emotion": "encouraging", "sfx": "whoosh" }
+        ]
+      },
+      "dialogue_bridge_1": {
+        "character_id": "mentor",
+        "lines": [
+          { "text": "第一关完成。记住，四条高压线无例外：禁止婚外情和内部恋爱、禁止行贿受贿、禁止弄虚作假、禁止透露工资。", "emotion": "serious" },
+          { "text": "接下来第二关，考勤。在润泽园，飞书不只是聊天工具，也是你的考勤与审批入口。", "emotion": "encouraging" }
+        ]
+      },
+      "dialogue_bridge_2": {
+        "character_id": "partner",
+        "lines": [
+          { "text": "干得不错。考勤规范看起来是小事，但体现的是对规则的尊重，也是对自己时间的管理。", "emotion": "encouraging" },
+          { "text": "第三关是心学文化。润泽园不只是来上班，更是来建设心灵品质。呵护成长群里的每一次分享，都是修行。", "emotion": "neutral" }
+        ]
+      },
+      "dialogue_bridge_3": {
+        "character_id": "mentor",
+        "lines": [
+          { "text": "心学文化这一关，核心是真诚。必修《文化自信 民族复兴》，每周读两遍，重点在心道德事四部曲。", "emotion": "serious" },
+          { "text": "第四关，我们去公司一层餐厅。润泽园的用餐文化，也是文化的一部分。", "emotion": "encouraging", "sfx": "whoosh" }
+        ]
+      },
+      "dialogue_bridge_4": {
+        "character_id": "colleague",
+        "lines": [
+          { "text": "明哥跟你说，在润泽园吃饭有个规矩，不剩一粒米。不是形式主义，是惜福和对他人的尊重。", "emotion": "encouraging" },
+          { "text": "最后一关，诚信。高压线里有一条，严禁利用工作之便行贿或收贿。这是保护你，也是保护公司。", "emotion": "serious" }
+        ]
+      },
+      "dialogue_closing": {
+        "character_id": "mentor",
+        "lines": [
+          { "text": "五关全部完成，恭喜你。入职第一周，记得提交入职资料、开通门禁胸牌、加入部门群和公司大群。", "emotion": "encouraging" },
+          { "text": "有问题，飞书搜索 HR 服务台。期待你在润泽园：总是发现问题，总是探究本质，总是坚定信心，总是胸怀理想。", "emotion": "happy", "sfx": "success" }
+        ]
+      }
+    },
+    "choices": {
+      "choice_1": {
+        "prompt": "第一关 · 高压线。午餐时，明哥凑过来低声问：你 offer 多少啊？咱们都是一家人，透露一下呗。周围还有其他新伙伴。你会？",
+        "character_id": "colleague",
+        "options": [
+          { "id": "a", "text": "委婉告诉一个大概范围", "feedback": "违反高压线。入职指南规定，严禁透露自己工资给他人，违者辞退。", "score": 0 },
+          { "id": "b", "text": "笑着打岔：明哥，指南说工资不能聊哦", "feedback": "很好。工资保密是制度红线，应温和而坚定地拒绝。", "score": 95 },
+          { "id": "c", "text": "不回答，但私下用飞书告诉另一位同事", "feedback": "同样违反高压线。无论对谁，透露工资都是红线。", "score": 5 }
+        ]
+      },
+      "choice_2": {
+        "prompt": "第二关 · 考勤。芳野姐约你下午去朝阳见客户，15 点到 17 点不在园区。明哥说，进公园范围打卡就行，不用走审批。你会？",
+        "character_id": "partner",
+        "options": [
+          { "id": "a", "text": "听明哥的，进公园打卡就好", "feedback": "不规范。外出须按考勤制度在飞书提交申请并完成审批。", "score": 25 },
+          { "id": "b", "text": "先在飞书提交外出申请，审批后再出发", "feedback": "正确。严谨守诺，是对自己也是对组织的负责。", "score": 95 },
+          { "id": "c", "text": "先出门见客户，回来再补审批", "feedback": "先斩后奏不符合制度。审批应先于行动。", "score": 35 }
+        ]
+      },
+      "choice_3": {
+        "prompt": "第三关 · 心学文化。第二周，需在呵护成长群发学习心得。今天读了心道德事，但很忙。明哥发来昨天的心得说，复制改改就行。你会？",
+        "character_id": "colleague",
+        "options": [
+          { "id": "a", "text": "复制明哥的心得，改几个词发出去", "feedback": "违背学习文化。呵护成长群的意义是真实成长，彼此照亮。", "score": 10 },
+          { "id": "b", "text": "哪怕只有三句话，也写真实感受发出去", "feedback": "非常好。对经典深入浅出，真诚比完美更重要。", "score": 100 },
+          { "id": "c", "text": "今天太忙，先不发，明天再说", "feedback": "呵护成长群要求每日分享。主动学习是建设心灵品质的践行。", "score": 45 }
+        ]
+      },
+      "choice_4": {
+        "prompt": "第四关 · 用餐文化。公司餐厅午餐，你打多了菜吃不完。明哥说，剩一点没事，反正会倒掉。你会？",
+        "character_id": "colleague",
+        "options": [
+          { "id": "a", "text": "剩一点没关系，下次注意", "feedback": "润泽园用餐文化要求不剩一粒米。惜福是对资源的尊重。", "score": 30 },
+          { "id": "b", "text": "尽量吃完，下次按需取餐，不需要用餐提前和报餐员说", "feedback": "正确。不剩一粒米是用餐文化，提前沟通避免浪费也是。", "score": 95 },
+          { "id": "c", "text": "把剩的给同事帮忙吃", "feedback": "心意可以理解，但自己取餐自己负责更好。按需取餐、不浪费是根本。", "score": 55 }
+        ]
+      },
+      "choice_5": {
+        "prompt": "第五关 · 诚信合规。采购供应商私下微信说，如果订单给他们，可以感谢一下你个人，金额不大，行业惯例。你会？",
+        "character_id": "partner",
+        "sfx": "phone_ring",
+        "options": [
+          { "id": "a", "text": "拒绝并上报，坚持按公司流程公正评估", "feedback": "完美。严禁行贿受贿是高压线，诚信是润泽园不可触碰的底线。", "score": 100 },
+          { "id": "b", "text": "先收下，看看产品是否更好", "feedback": "一旦接受好处，判断就会失真。诚信要求零容忍。", "score": 10 },
+          { "id": "c", "text": "不要个人好处，但暗示可以加快流程", "feedback": "变相利益交换同样违反诚信原则。", "score": 35 }
+        ]
+      }
+    },
+    "feedbacks": {},
+    "reflections": {
+      "reflection": {
+        "prompt": "五关演练结束。你觉得自己最需要刻意练习的是哪一点？制度合规、主动学习、还是心学践行？写一两句真实体会。",
+        "placeholder": "例如：我意识到高压线不是束缚，而是保护 everyone's 信任……"
+      }
+    },
+    "results": {
+      "result": {
+        "headline": "五关演练完成，欢迎正式启程",
+        "summary_template": "你在润泽园新人五关演练中获得 {score} 分。{passed_message}",
+        "growth_suggestions": [
+          "完成第一周 checklist：入职资料、门禁胸牌、部门群",
+          "飞书搜索 HR 服务台，下载润泽园 APP 开始诵读打卡",
+          "加入呵护成长群，每日分享真实学习心得"
+        ]
+      }
+    }
+  },
+  "assessment": {
+    "passing_score": 60,
+    "dimensions": [
+      { "name": "制度合规", "weight": 0.25 },
+      { "name": "考勤规范", "weight": 0.2 },
+      { "name": "心学文化", "weight": 0.25 },
+      { "name": "用餐礼仪", "weight": 0.15 },
+      { "name": "诚信正直", "weight": 0.15 }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { PlayableBlueprint } from "@playableos/blueprint-schema";
 import {
@@ -21,14 +21,16 @@ import { AudioControls } from "./player/AudioControls";
 
 interface PlayablePlayerProps {
   blueprint: PlayableBlueprint;
+  playableId?: string;
 }
 
-export function PlayablePlayer({ blueprint }: PlayablePlayerProps) {
+export function PlayablePlayer({ blueprint, playableId }: PlayablePlayerProps) {
   const [runtime] = useState(() => new PlayableRuntime(blueprint));
   const [, tick] = useState(0);
   const refresh = useCallback(() => tick((n) => n + 1), []);
   const [pendingChoice, setPendingChoice] = useState<ChoiceRecord | null>(null);
   const [started, setStarted] = useState(false);
+  const sessionSaved = useRef(false);
 
   const audio = usePlayableAudio({ blueprint });
   const node = runtime.getCurrentNode();
@@ -50,6 +52,28 @@ export function PlayablePlayer({ blueprint }: PlayablePlayerProps) {
     if (node.sfx) audio.playSfx(node.sfx);
     if (scene?.ambient_track) audio.setAmbient(scene.ambient_track);
   }, [node?.id, started]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!result || !playableId || sessionSaved.current) return;
+    sessionSaved.current = true;
+
+    const state = runtime.getState();
+    void fetch("/api/sessions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        playableId,
+        playableTitle: blueprint.metadata.title,
+        score: result.score,
+        passed: result.passed,
+        dimension_scores: result.dimension_scores,
+        reflection: result.reflection,
+        duration_ms: Date.now() - state.startedAt,
+      }),
+    }).catch(() => {
+      sessionSaved.current = false;
+    });
+  }, [result, playableId, blueprint.metadata.title, runtime]);
 
   if (!node) {
     return (
@@ -137,6 +161,7 @@ export function PlayablePlayer({ blueprint }: PlayablePlayerProps) {
             <FeedbackCinematic
               key={node.id}
               content={runtime.getFeedbackContent(node.id)!}
+              audio={audio}
               onContinue={() => {
                 audio.playSfx("whoosh");
                 runtime.proceed();
@@ -205,7 +230,7 @@ function IntroCinematic({
       )}
 
       {content.tagline && (
-        <p className="mb-3 text-sm uppercase tracking-[0.25em] text-indigo-300/80">
+        <p className="mb-3 text-sm uppercase tracking-[0.25em] text-violet-300/80">
           {content.tagline}
         </p>
       )}
@@ -233,7 +258,7 @@ function IntroCinematic({
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.98 }}
         onClick={onStart}
-        className="mt-10 rounded-2xl bg-indigo-500 px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:bg-indigo-400"
+        className="mt-10 player-btn-primary"
       >
         {content.cta}
       </motion.button>
@@ -323,14 +348,19 @@ function DialogueCinematic({
 
   const { displayed, done, skip } = useTypewriter(
     currentLine?.text ?? "",
-    32,
+    audio.voiceEnabled ? 22 : 28,
     true,
   );
 
   useEffect(() => {
-    if (currentLine && !audio.muted) {
-      audio.speak(currentLine.text, dialogue.character_id, currentLine?.emotion);
-    }
+    if (!currentLine || audio.muted || !audio.voiceEnabled) return;
+    const timer = window.setTimeout(() => {
+      audio.speak(currentLine.text, dialogue.character_id, currentLine.emotion);
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, [msgIndex]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     if (currentLine?.sfx) audio.playSfx(currentLine.sfx);
   }, [msgIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -349,7 +379,7 @@ function DialogueCinematic({
       />
 
       <div
-        className="cursor-pointer rounded-2xl border border-white/10 bg-black/50 p-5 backdrop-blur-xl md:p-6"
+        className="cursor-pointer player-glass p-5 md:p-6"
         onClick={() => !done && skip()}
       >
         <p className="min-h-[4rem] text-base leading-relaxed text-white/90 md:text-lg">
@@ -389,10 +419,18 @@ function ChoiceCinematic({
 }) {
   const choice = runtime.getChoiceContent(nodeId)!;
   const characterId = choice.character_id;
+  const levelMatch = nodeId.match(/choice_(\d+)/);
+  const levelNum = levelMatch ? levelMatch[1] : null;
 
   useEffect(() => {
     if (choice.sfx) audio.playSfx(choice.sfx);
-  }, [choice.sfx]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!audio.muted && audio.voiceEnabled) {
+      const timer = window.setTimeout(() => {
+        audio.speak(choice.prompt, characterId ?? "mentor", "neutral");
+      }, 400);
+      return () => window.clearTimeout(timer);
+    }
+  }, [choice.sfx, choice.prompt, characterId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <motion.div
@@ -405,7 +443,12 @@ function ChoiceCinematic({
         <CharacterPortrait blueprint={blueprint} characterId={characterId} />
       )}
 
-      <div className="rounded-2xl border border-amber-400/20 bg-black/55 p-5 backdrop-blur-xl md:p-6">
+      <div className="player-glass border-amber-400/20 p-5 md:p-6">
+        {levelNum && (
+          <span className="mb-3 inline-block rounded-full border border-violet-400/30 bg-violet-500/15 px-3 py-1 text-xs font-semibold text-violet-200">
+            第 {levelNum} / 5 关
+          </span>
+        )}
         <p className="text-base font-medium leading-relaxed text-white md:text-lg">
           {choice.prompt}
         </p>
@@ -425,7 +468,7 @@ function ChoiceCinematic({
                 const record = runtime.makeChoice(opt.id);
                 if (record) onChoose(record);
               }}
-              className="group flex w-full items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4 text-left transition hover:border-indigo-400/40 hover:bg-indigo-500/10"
+              className="group flex w-full items-start gap-3 rounded-xl border border-indigo-400/15 bg-indigo-500/8 p-4 text-left transition hover:border-indigo-400/35 hover:bg-indigo-500/15"
             >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-500/30 text-sm font-bold text-indigo-200">
                 {String.fromCharCode(65 + i)}
@@ -453,7 +496,7 @@ function ChoiceFeedbackCinematic({
   const isGood = choice.score >= 70;
 
   useEffect(() => {
-    audio.speak(choice.feedback);
+    audio.speak(choice.feedback, "mentor", isGood ? "encouraging" : "serious");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -493,9 +536,11 @@ function ChoiceFeedbackCinematic({
 
 function FeedbackCinematic({
   content,
+  audio,
   onContinue,
 }: {
   content: { title: string; body: string; tone: string };
+  audio: ReturnType<typeof usePlayableAudio>;
   onContinue: () => void;
 }) {
   const icon =
@@ -505,11 +550,24 @@ function FeedbackCinematic({
         ? "📋"
         : "📌";
 
+  useEffect(() => {
+    if (!audio.muted && audio.voiceEnabled) {
+      const timer = window.setTimeout(() => {
+        audio.speak(
+          `${content.title}。${content.body}`,
+          "mentor",
+          content.tone === "positive" ? "encouraging" : "neutral",
+        );
+      }, 300);
+      return () => window.clearTimeout(timer);
+    }
+  }, [content.title, content.body, content.tone]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mx-auto w-full max-w-3xl rounded-2xl border border-cyan-400/20 bg-black/55 p-6 backdrop-blur-xl"
+      className="mx-auto w-full max-w-3xl player-glass border-cyan-400/20 p-6"
     >
       <div className="flex items-start gap-3">
         <span className="text-3xl">{icon}</span>
@@ -542,7 +600,7 @@ function ReflectionCinematic({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mx-auto w-full max-w-3xl rounded-2xl border border-white/10 bg-black/55 p-6 backdrop-blur-xl"
+      className="mx-auto w-full max-w-3xl player-glass p-6"
     >
       <h3 className="text-lg font-bold text-white">✍️ 写下你的反思</h3>
       <p className="mt-2 text-sm leading-relaxed text-white/65">
@@ -559,7 +617,7 @@ function ReflectionCinematic({
         type="button"
         disabled={text.trim().length < 5}
         onClick={() => onSubmit(text)}
-        className="mt-4 w-full rounded-xl bg-indigo-500 py-3.5 font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-40"
+        className="mt-4 w-full rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 py-3.5 font-semibold text-white shadow-[0_0_20px_rgba(99,102,241,0.3)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
       >
         提交反思，查看成长报告
       </button>
@@ -592,9 +650,9 @@ function ResultCinematic({
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl"
+      className="mx-auto w-full max-w-3xl overflow-hidden player-glass"
     >
-      <div className="bg-gradient-to-r from-indigo-600/30 to-purple-600/30 p-8 text-center">
+      <div className="bg-gradient-to-r from-indigo-600/35 via-violet-600/30 to-purple-600/25 p-8 text-center">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}

@@ -127,6 +127,16 @@ export function usePlayableAudio({
     [enabled, muted, voiceEnabled],
   );
 
+  useEffect(() => {
+    if (!voiceSpeaking) {
+      if (bgmRef.current) bgmRef.current.volume = bgmRef.current.dataset.baseVolume ? Number(bgmRef.current.dataset.baseVolume) : 0.22;
+      if (ambientRef.current) ambientRef.current.volume = ambientRef.current.dataset.baseVolume ? Number(ambientRef.current.dataset.baseVolume) : 0.07;
+      return;
+    }
+    if (bgmRef.current) bgmRef.current.volume = 0.06;
+    if (ambientRef.current) ambientRef.current.volume = 0.03;
+  }, [voiceSpeaking]);
+
   const startBgm = useCallback(() => {
     if (muted || !enabled) return;
     const bgmKey = blueprint.presentation?.audio?.bgm;
@@ -139,6 +149,7 @@ export function usePlayableAudio({
       bgmRef.current = new Audio(track.src);
       bgmRef.current.loop = track.loop;
       bgmRef.current.volume = track.volume;
+      bgmRef.current.dataset.baseVolume = String(track.volume);
     }
     void bgmRef.current.play().catch(() => undefined);
   }, [blueprint.presentation?.audio, enabled, muted]);
@@ -156,7 +167,9 @@ export function usePlayableAudio({
 
       const audio = new Audio(track.src);
       audio.loop = track.loop;
-      audio.volume = track.volume * 0.6;
+      const vol = track.volume * 0.6;
+      audio.volume = vol;
+      audio.dataset.baseVolume = String(vol);
       ambientRef.current = audio;
       void audio.play().catch(() => undefined);
     },

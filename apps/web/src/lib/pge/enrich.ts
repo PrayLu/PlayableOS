@@ -1,4 +1,4 @@
-import type { PlayableBlueprint, Scene } from "@playableos/blueprint-schema";
+import type { PgeBlueprint, PlayableBlueprint, Scene } from "@playableos/blueprint-schema";
 import { VOLCENGINE_VOICES } from "@/lib/tts/types";
 
 const SCENE_IMAGES = [
@@ -13,6 +13,7 @@ const VOICE_BY_CHARACTER: Record<string, string> = {
   mentor: VOLCENGINE_VOICES.mentor_female,
   colleague: VOLCENGINE_VOICES.colleague_male,
   customer: VOLCENGINE_VOICES.customer_male,
+  partner: VOLCENGINE_VOICES.mentor_female,
 };
 
 const MOODS: Scene["mood"][] = [
@@ -26,7 +27,7 @@ const MOODS: Scene["mood"][] = [
 ];
 
 export function enrichBlueprint(
-  raw: PlayableBlueprint,
+  raw: PgeBlueprint,
   playableId: string,
 ): PlayableBlueprint {
   const title = raw.metadata.title;

@@ -1,6 +1,7 @@
 import {
   parsePlayableBlueprint,
-  safeParsePlayableBlueprint,
+  safeParsePgeBlueprint,
+  type PgeBlueprint,
 } from "@playableos/blueprint-schema";
 import type { PlayableBlueprint } from "@playableos/blueprint-schema";
 import { randomUUID } from "crypto";
@@ -8,19 +9,57 @@ import { callDeepSeekJson } from "./deepseek";
 import { enrichBlueprint } from "./enrich";
 import { buildPgeUserPrompt, PGE_SYSTEM_PROMPT } from "./prompt";
 
+import type { KnowledgeSummary } from "./analyze";
+
 export interface GenerateResult {
   id: string;
   blueprint: PlayableBlueprint;
   sourceFileName: string;
   sourceTextPreview: string;
+  knowledgeSummary?: KnowledgeSummary;
+}
+
+function normalizePgeOutput(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object") return raw;
+
+  const obj = raw as Record<string, unknown>;
+  const meta = (obj.metadata ?? {}) as Record<string, unknown>;
+
+  return {
+    ...obj,
+    metadata: {
+      language: "zh-CN",
+      type: "simulation",
+      tags: [],
+      ...meta,
+      duration_minutes:
+        meta.duration_minutes !== undefined
+          ? Number(meta.duration_minutes)
+          : 12,
+    },
+    interactions: {
+      intros: {},
+      dialogues: {},
+      choices: {},
+      feedbacks: {},
+      reflections: {},
+      results: {},
+      ...((obj.interactions as object) ?? {}),
+    },
+    assessment: {
+      passing_score: 60,
+      ...((obj.assessment as object) ?? {}),
+    },
+  };
 }
 
 export async function generatePlayableFromText(
   documentText: string,
   fileName: string,
+  knowledgeSummary?: KnowledgeSummary,
 ): Promise<GenerateResult> {
   const playableId = `gen-${randomUUID().slice(0, 8)}`;
-  const userPrompt = buildPgeUserPrompt(documentText, fileName);
+  const userPrompt = buildPgeUserPrompt(documentText, fileName, knowledgeSummary);
 
   let lastError = "未知错误";
 
@@ -34,21 +73,24 @@ export async function generatePlayableFromText(
         : `${userPrompt}\n\n校验错误：${lastError}`,
     );
 
-    const parsed = safeParsePlayableBlueprint(rawJson);
+    const normalized = normalizePgeOutput(rawJson);
+    const parsed = safeParsePgeBlueprint(normalized);
+
     if (parsed.success) {
-      const blueprint = enrichBlueprint(parsed.data, playableId);
+      const blueprint = enrichBlueprint(parsed.data as PgeBlueprint, playableId);
       parsePlayableBlueprint(blueprint);
       return {
         id: playableId,
         blueprint,
         sourceFileName: fileName,
         sourceTextPreview: documentText.slice(0, 500),
+        knowledgeSummary,
       };
     }
 
     lastError = JSON.stringify(parsed.error.flatten().fieldErrors).slice(
       0,
-      500,
+      800,
     );
   }
 

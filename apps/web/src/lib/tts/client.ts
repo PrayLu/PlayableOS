@@ -8,6 +8,7 @@ import {
   VOLCENGINE_VOICES,
   type TtsProviderName,
 } from "@/lib/tts/types";
+import { prepareTextForTts, splitForTts } from "@/lib/tts/text";
 
 const audioCache = new Map<string, string>();
 
@@ -32,6 +33,11 @@ function resolveVoiceId(
 
   if (characterId && characterId in defaults) {
     return defaults[characterId as keyof typeof defaults];
+  }
+
+  // partner 等新角色 id 复用 mentor 默认音色
+  if (characterId === "partner") {
+    return defaults.mentor_female;
   }
 
   return defaults.narrator;
@@ -128,6 +134,9 @@ export class TtsClient {
     characterId?: string,
     emotion?: string,
   ): Promise<void> {
+    const cleaned = prepareTextForTts(text);
+    if (!cleaned) return;
+
     const { blueprint, onSpeakingChange, onProviderChange } = this.options;
     const ttsConfig = blueprint.presentation?.audio?.tts;
     const preferBrowser = ttsConfig?.provider === "browser";
@@ -138,7 +147,7 @@ export class TtsClient {
     if (preferBrowser) {
       onProviderChange?.("browser");
       onSpeakingChange?.(true);
-      await speakWithBrowser(text, blueprint, characterId);
+      await speakWithBrowser(cleaned, blueprint, characterId);
       onSpeakingChange?.(false);
       return;
     }
@@ -148,7 +157,7 @@ export class TtsClient {
       if (fallback === "browser") {
         onProviderChange?.("browser");
         onSpeakingChange?.(true);
-        await speakWithBrowser(text, blueprint, characterId);
+        await speakWithBrowser(cleaned, blueprint, characterId);
         onSpeakingChange?.(false);
       } else {
         onProviderChange?.("idle");
@@ -169,54 +178,63 @@ export class TtsClient {
       (this.activeProvider === "volcengine"
         ? "seed-tts-2.0-standard"
         : "eleven_multilingual_v2");
-    const key = cacheKey(text, voiceId, modelId);
 
+    const segments = splitForTts(cleaned);
     onSpeakingChange?.(true);
     onProviderChange?.(this.activeProvider);
 
     try {
-      let blobUrl = audioCache.get(key);
+      for (let i = 0; i < segments.length; i++) {
+        const segment = segments[i]!;
+        const key = cacheKey(segment, voiceId, modelId);
 
-      if (!blobUrl) {
-        this.abortController = new AbortController();
+        let blobUrl = audioCache.get(key);
 
-        const response = await fetch("/api/tts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          signal: this.abortController.signal,
-          body: JSON.stringify({
-            text,
-            voice_id: voiceId,
-            model_id: modelId,
-            language: blueprint.metadata.language,
-            stability: character?.voice?.stability ?? 0.52,
-            similarity_boost: character?.voice?.similarity_boost ?? 0.78,
-            speech_rate: character?.voice?.rate
-              ? mapRateToSpeechRate(character.voice.rate)
-              : 0,
-            emotion: emotion ? EMOTION_MAP[emotion] : undefined,
-          }),
-        });
+        if (!blobUrl) {
+          this.abortController = new AbortController();
 
-        if (!response.ok) {
-          throw new Error(`TTS API ${response.status}`);
+          const response = await fetch("/api/tts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            signal: this.abortController.signal,
+            body: JSON.stringify({
+              text: segment,
+              voice_id: voiceId,
+              model_id: modelId,
+              language: blueprint.metadata.language,
+              stability: character?.voice?.stability ?? 0.58,
+              similarity_boost: character?.voice?.similarity_boost ?? 0.82,
+              speech_rate: character?.voice?.rate
+                ? mapRateToSpeechRate(character.voice.rate)
+                : -12,
+              emotion: emotion ? EMOTION_MAP[emotion] : undefined,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`TTS API ${response.status}`);
+          }
+
+          const buffer = await response.arrayBuffer();
+          const blob = new Blob([buffer], { type: "audio/mpeg" });
+          blobUrl = URL.createObjectURL(blob);
+          audioCache.set(key, blobUrl);
         }
 
-        const buffer = await response.arrayBuffer();
-        const blob = new Blob([buffer], { type: "audio/mpeg" });
-        blobUrl = URL.createObjectURL(blob);
-        audioCache.set(key, blobUrl);
+        const audio = new Audio(blobUrl);
+        this.currentAudio = audio;
+        audio.volume = 0.92;
+
+        await new Promise<void>((resolve, reject) => {
+          audio.onended = () => resolve();
+          audio.onerror = () => reject(new Error("Audio playback failed"));
+          void audio.play().catch(reject);
+        });
+
+        if (i < segments.length - 1) {
+          await new Promise((r) => setTimeout(r, 280));
+        }
       }
-
-      const audio = new Audio(blobUrl);
-      this.currentAudio = audio;
-      audio.volume = 0.95;
-
-      await new Promise<void>((resolve, reject) => {
-        audio.onended = () => resolve();
-        audio.onerror = () => reject(new Error("Audio playback failed"));
-        void audio.play().catch(reject);
-      });
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         return;
@@ -224,7 +242,7 @@ export class TtsClient {
 
       if (fallback === "browser") {
         onProviderChange?.("browser");
-        await speakWithBrowser(text, blueprint, characterId);
+        await speakWithBrowser(cleaned, blueprint, characterId);
       } else {
         onProviderChange?.("idle");
       }

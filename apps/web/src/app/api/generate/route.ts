@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { parseWordDocument } from "@/lib/document/parse-word";
+import { parseDocument } from "@/lib/document/parse-document";
+import type { KnowledgeSummary } from "@/lib/pge/analyze";
 import { isDeepSeekConfigured } from "@/lib/pge/deepseek";
 import { generatePlayableFromText } from "@/lib/pge/generate";
 import { savePlayable } from "@/lib/store/playables";
@@ -27,27 +28,34 @@ export async function POST(request: Request) {
     const file = formData.get("file");
 
     if (!file || !(file instanceof File)) {
-      return NextResponse.json({ error: "请上传 Word 文件" }, { status: 400 });
+      return NextResponse.json({ error: "请上传文档" }, { status: 400 });
     }
 
-    const name = file.name.toLowerCase();
-    if (!name.endsWith(".docx")) {
-      return NextResponse.json(
-        { error: "仅支持 .docx 格式，请上传 Word 文档" },
-        { status: 400 },
-      );
+    let knowledgeSummary: KnowledgeSummary | undefined;
+    const summaryRaw = formData.get("summary");
+    if (summaryRaw && typeof summaryRaw === "string") {
+      try {
+        knowledgeSummary = JSON.parse(summaryRaw) as KnowledgeSummary;
+      } catch {
+        /* ignore invalid summary */
+      }
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const text = await parseWordDocument(buffer);
+    const text = await parseDocument(buffer, file.name);
 
-    const result = await generatePlayableFromText(text, file.name);
+    const result = await generatePlayableFromText(
+      text,
+      file.name,
+      knowledgeSummary,
+    );
 
     await savePlayable({
       id: result.id,
       createdAt: new Date().toISOString(),
       sourceFileName: result.sourceFileName,
       sourceTextPreview: result.sourceTextPreview,
+      knowledgeSummary: result.knowledgeSummary,
       blueprint: result.blueprint,
     });
 
