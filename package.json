@@ -6,7 +6,7 @@
     "dev": "pnpm --filter @playableos/web dev",
     "dev:clean": "pnpm --filter @playableos/web dev:clean",
     "build": "pnpm -r build",
-    "build:web": "pnpm --filter @playableos/web... build",
+    "build:web": "pnpm --filter @playableos/blueprint-schema run build && pnpm --filter @playableos/runtime run build && pnpm --filter @playableos/web run build",
     "typecheck": "pnpm -r typecheck"
   },
   "engines": {
